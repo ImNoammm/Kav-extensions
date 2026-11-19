@@ -1,13 +1,10 @@
 package kav.kavapp.examples.notebook
 
-import android.annotation.SuppressLint
+import android.animation.LayoutTransition
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -15,151 +12,179 @@ import org.json.JSONArray
 import org.json.JSONObject
 import kav.kavapp.api.Kav
 import kav.kavapp.api.KavExtension
+import kav.kavapp.api.KavUi
 
 // Notebook: a screen of its own, which the rider can pin as a tab (its page is marked "tab" in the manifest). Built from
-// Kav's own components, so it follows Kav's theme, dark mode and Hebrew. A plus adds a note; tapping a note opens it to
-// edit, with Delete inside. The notes are kept in a file in Kav's private storage.
+// Kav's own components, so it follows Kav's theme, dark mode and Hebrew, and moves as Kav does: the list, a note to
+// read, and its edit form are pages of Kav's (KavUi.pages), and a note added or deleted folds into or out of the list.
+// The notes are kept in a file in Kav's private storage.
 class Notebook : KavExtension {
     private lateinit var kav: Kav
 
-    private class Note(val title: String, val body: String)
+    private class Note(val title: String, val body: String) {
+        val heading get() = title.ifBlank { body.lineSequence().firstOrNull { it.isNotBlank() }?.trim().orEmpty() }
+    }
 
     override fun start(kav: Kav) {
         this.kav = kav
-        kav.screen("notes") { context, _ -> screen(context) }
+        kav.screen("notes") { context, _ ->
+            val pages = arrayOfNulls<KavUi.Pages>(1)
+            val p = kav.ui().pages(context, listView(context, pages))
+            pages[0] = p
+            p.view()
+        }
     }
 
     private fun words(en: String, he: String) = if (kav.locale() == "he") he else en
 
     private fun px(c: Context, name: String) = (kav.ui().dp(name) * c.resources.displayMetrics.density).toInt()
 
-    // The list, or one note open: the screen swaps between them in place.
-    private fun screen(c: Context): View {
-        val box = FrameLayout(c)
-        listAgain(box, c)
-        return box
-    }
+    private fun hairline(c: Context) = maxOf(1, (0.5f * c.resources.displayMetrics.density).toInt())
 
-    private fun listAgain(box: FrameLayout, c: Context) {
-        box.removeAllViews()
-        box.addView(listView(c) { i -> box.removeAllViews(); box.addView(editor(c, i) { listAgain(box, c) }) })
-    }
-
-    // A round plus at the top for a new note, then the notes as rows on one card; one short line when there are none.
-    // open(-1) is a new note.
-    private fun listView(c: Context, open: (Int) -> Unit): View {
+    // The list: a round plus at the top for a new note, then the notes as rows on one card, or one short line when there
+    // are none. fold: a note that folds in (added) or out (deleted, still in the list given) once the list is shown.
+    private fun listView(c: Context, pages: Array<KavUi.Pages?>, foldIn: Int = -1, foldOut: Note? = null, before: List<Note>? = null): View {
         val ui = kav.ui()
         val page = LinearLayout(c).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(0, 0, 0, px(c, "gap8") * 3)
+            layoutTransition = LayoutTransition().apply { enableTransitionType(LayoutTransition.CHANGING) }
         }
-        // The plus at the top, at the end, as the screen header's round button.
-        val size = (48 * c.resources.displayMetrics.density).toInt()
         page.addView(LinearLayout(c).apply {
             gravity = Gravity.END
-            addView(PlusButton(c, ui.color("fill"), ui.color("text")).apply {
-                contentDescription = words("New note", "פתק חדש")
-                setOnClickListener { open(-1) }
-            }, LinearLayout.LayoutParams(size, size))
+            addView(ui.iconButton(c, "plus", words("New note", "פתק חדש")) { pages[0]?.forward(editor(c, pages, -1)) })
         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { bottomMargin = px(c, "gap3") })
-        val notes = load(c)
-        if (notes.isEmpty()) {
-            page.addView(TextView(c).apply {
-                text = words("No notes yet. Tap + to write one.", "עוד אין פתקים. הקישו על + כדי לכתוב.")
-                textSize = ui.textSize("subhead")
-                setTextColor(ui.color("textSecondary"))
-                gravity = Gravity.CENTER
-                setPadding(0, px(c, "gap6"), 0, px(c, "gap6"))
-            })
-        } else {
-            val card = LinearLayout(c).apply {
-                orientation = LinearLayout.VERTICAL
-                background = GradientDrawable().apply {
-                    setColor(ui.color("surface"))
-                    cornerRadius = kav.ui().dp("rCard") * c.resources.displayMetrics.density
-                    setStroke(maxOf(1, (0.5f * c.resources.displayMetrics.density).toInt()), ui.color("separator"))
+        val notes = before ?: load(c)
+        val empty = TextView(c).apply {
+            text = words("No notes yet. Tap + to write one.", "עוד אין פתקים. הקישו על + כדי לכתוב.")
+            textSize = ui.textSize("subhead")
+            setTextColor(ui.color("textSecondary"))
+            gravity = Gravity.CENTER
+            setPadding(0, px(c, "gap6"), 0, px(c, "gap6"))
+        }
+        val card = LinearLayout(c).apply {
+            orientation = LinearLayout.VERTICAL
+            background = GradientDrawable().apply {
+                setColor(ui.color("surface"))
+                cornerRadius = ui.dp("rCard") * c.resources.displayMetrics.density
+                setStroke(hairline(c), ui.color("separator"))
+            }
+            clipToOutline = true
+            layoutTransition = LayoutTransition().apply { enableTransitionType(LayoutTransition.CHANGING) }
+        }
+        val newest = JSONObject(kav.settings()).optBoolean("newest", true)
+        // Each row in a box of its own with the hairline above it, so a row and its line fold as one.
+        fun item(i: Int, note: Note, first: Boolean) = LinearLayout(c).apply {
+            orientation = LinearLayout.VERTICAL
+            if (!first) addView(View(c).apply { setBackgroundColor(ui.color("separator")) },
+                LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, hairline(c)).apply { marginStart = px(c, "gap4") })
+            val sub = if (note.title.isNotBlank()) note.body.lineSequence().firstOrNull { it.isNotBlank() }?.trim() else null
+            addView(ui.row(c, null, note.heading.ifBlank { words("Empty note", "פתק ריק") }, sub) { pages[0]?.forward(reader(c, pages, i)) })
+        }
+        val order = (if (newest) notes.indices.reversed() else notes.indices).toList()
+        // A note being added folds in after the list shows; until then it isn't drawn.
+        val drawn = order.filter { it != foldIn }
+        for ((n, i) in drawn.withIndex()) card.addView(item(i, notes[i], n == 0))
+        if (notes.isEmpty() || (drawn.isEmpty() && foldIn < 0)) page.addView(empty) else page.addView(card)
+        if (foldIn >= 0 || foldOut != null) page.post {
+            if (foldIn >= 0) {
+                if (card.parent == null) { page.removeView(empty); page.addView(card) }
+                val at = order.indexOf(foldIn)
+                card.addView(item(foldIn, notes[foldIn], at == 0), at)
+                // The row that was first gets its hairline.
+                if (at == 0 && card.childCount > 1) (card.getChildAt(1) as LinearLayout).addView(View(c).apply { setBackgroundColor(ui.color("separator")) }, 0,
+                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, hairline(c)).apply { marginStart = px(c, "gap4") })
+            }
+            if (foldOut != null) {
+                val at = order.indexOfFirst { notes[it] === foldOut }
+                if (at >= 0) {
+                    card.removeViewAt(at)
+                    if (card.childCount == 0) page.postDelayed({ page.removeView(card); page.addView(empty) }, 300)
+                    else if (at == 0) (card.getChildAt(0) as LinearLayout).let { if (it.childCount > 1) it.removeViewAt(0) }
                 }
-                clipToOutline = true
             }
-            val newest = JSONObject(kav.settings()).optBoolean("newest", true)
-            val order = if (newest) notes.indices.reversed() else notes.indices
-            for ((n, i) in order.withIndex()) {
-                if (n > 0) card.addView(View(c).apply { setBackgroundColor(ui.color("separator")) },
-                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, maxOf(1, (0.5f * c.resources.displayMetrics.density).toInt())).apply { marginStart = px(c, "gap4") })
-                val note = notes[i]
-                val first = note.body.lineSequence().firstOrNull { it.isNotBlank() }?.trim().orEmpty()
-                val title = note.title.ifBlank { first.ifBlank { words("Empty note", "פתק ריק") } }
-                val sub = if (note.title.isNotBlank()) first.ifBlank { null } else null
-                card.addView(ui.row(c, null, title, sub) { open(i) })
-            }
-            page.addView(card)
         }
         return ScrollView(c).apply { addView(page) }
     }
 
-    // One note to write or edit: its title and its text, Save, Cancel, and Delete (with a confirm) for one already saved.
-    private fun editor(c: Context, index: Int, back: () -> Unit): View {
+    // One note to read: Back, Edit and Delete at the top, its title as the page's title, its text under it.
+    private fun reader(c: Context, pages: Array<KavUi.Pages?>, index: Int): View {
         val ui = kav.ui()
-        val notes = load(c)
-        val note = notes.getOrNull(index) ?: Note("", "")
-        var title = note.title
-        var body = note.body
-        val gap = px(c, "gap3")
-        fun spaced(v: View) = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = gap }
+        val note = load(c).getOrNull(index) ?: Note("", "")
+        val bar = LinearLayout(c).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            addView(ui.iconButton(c, "back", words("Back", "חזרה")) { pages[0]?.back(listView(c, pages)) })
+            addView(View(c), LinearLayout.LayoutParams(0, 1, 1f))
+            addView(ui.iconButton(c, "edit", words("Edit", "עריכה")) { pages[0]?.forward(editor(c, pages, index)) })
+            addView(View(c), LinearLayout.LayoutParams(px(c, "gap2"), 1))
+            addView(ui.iconButton(c, "delete", words("Delete", "מחיקה")) {
+                ui.dialog(c, words("Delete this note?", "למחוק את הפתק?"), note.heading, words("Delete", "מחיקה")) {
+                    val all = load(c)
+                    save(c, all.filterIndexed { j, _ -> j != index })
+                    kav.log("deleted a note")
+                    pages[0]?.back(listView(c, pages, foldOut = all.getOrNull(index), before = all))
+                }
+            })
+        }
         val page = LinearLayout(c).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(0, px(c, "gap2"), 0, px(c, "gap4"))
+            setPadding(0, 0, 0, px(c, "gap8") * 3)
+            addView(bar)
+            addView(TextView(c).apply {
+                text = note.title.ifBlank { words("Note", "פתק") }
+                textSize = ui.textSize("title")
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(ui.color("text"))
+                setPadding(0, px(c, "gap5"), 0, px(c, "gap2"))
+            })
+            addView(TextView(c).apply {
+                text = note.body
+                textSize = ui.textSize("body")
+                setTextColor(ui.color("textSecondary"))
+                setLineSpacing(0f, 1.15f)
+                setTextIsSelectable(true)
+            })
+        }
+        return ScrollView(c).apply { addView(page) }
+    }
+
+    // One note to write or edit: its title (one line, Next goes on to the text), its text (as many lines as it takes),
+    // Save and Cancel. Save goes back to the note, or for a new one to the list, where it folds in.
+    private fun editor(c: Context, pages: Array<KavUi.Pages?>, index: Int): View {
+        val ui = kav.ui()
+        val note = load(c).getOrNull(index) ?: Note("", "")
+        var title = note.title
+        var body = note.body
+        fun spaced(top: String = "gap3") = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = px(c, top) }
+        fun leave() { pages[0]?.back(if (index < 0) listView(c, pages) else reader(c, pages, index)) }
+        val page = LinearLayout(c).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0, px(c, "gap2"), 0, px(c, "gap8") * 3)
             addView(TextView(c).apply {
                 text = if (index < 0) words("New note", "פתק חדש") else words("Edit note", "עריכת פתק")
                 textSize = ui.textSize("headline")
                 setTextColor(ui.color("text"))
                 setPadding(0, 0, 0, px(c, "gap3"))
             })
-            addView(ui.textField(c, title, words("Title", "כותרת")) { title = it })
-            addView(ui.textField(c, body, words("Platform 2, line 480 at 7:10", "רציף 2, קו 480 ב-7:10")) { body = it }, spaced(this))
+            addView(ui.textField(c, title, words("Title", "כותרת"), false, "next") { title = it })
+            addView(ui.textField(c, body, words("Platform 2, line 480 at 7:10", "רציף 2, קו 480 ב-7:10"), true, null) { body = it }, spaced())
             addView(ui.button(c, words("Save", "שמירה"), true) {
                 val t = title.trim()
-                val b = body.trim()
-                if (t.isEmpty() && b.isEmpty()) { back(); return@button }
+                val b = body.trimEnd()
+                if (t.isEmpty() && b.isBlank()) { leave(); return@button }
                 val now = load(c).toMutableList()
-                if (index in now.indices) now[index] = Note(t, b) else now += Note(t, b)
-                save(c, now)
-                kav.log(if (index < 0) "added a note" else "saved a note")
-                back()
-            }, spaced(this).apply { topMargin = px(c, "gap5") })
-            addView(ui.button(c, words("Cancel", "ביטול"), false) { back() }, spaced(this))
-            if (index >= 0) addView(ui.button(c, words("Delete", "מחיקה"), false) {
-                ui.dialog(c, words("Delete this note?", "למחוק את הפתק?"), note.title.ifBlank { note.body.lineSequence().firstOrNull().orEmpty() },
-                    words("Delete", "מחיקה")) {
-                    save(c, load(c).filterIndexed { j, _ -> j != index })
-                    kav.log("deleted a note")
-                    back()
+                if (index in now.indices) {
+                    now[index] = Note(t, b); save(c, now); kav.log("saved a note")
+                    pages[0]?.back(reader(c, pages, index))
+                } else {
+                    now += Note(t, b); save(c, now); kav.log("added a note")
+                    pages[0]?.back(listView(c, pages, foldIn = now.lastIndex))
                 }
-            }, spaced(this))
+            }, spaced("gap5"))
+            addView(ui.button(c, words("Cancel", "ביטול"), false) { leave() }, spaced())
         }
         return ScrollView(c).apply { addView(page) }
-    }
-
-    // A round button with a plus, on Kav's fill, as the round buttons in Kav's own screen headers.
-    @SuppressLint("ViewConstructor")
-    private class PlusButton(c: Context, fill: Int, ink: Int) : View(c) {
-        private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = ink; strokeWidth = 2.2f * c.resources.displayMetrics.density; strokeCap = Paint.Cap.ROUND
-        }
-
-        init {
-            background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(fill) }
-            isClickable = true
-            isFocusable = true
-        }
-
-        override fun onDraw(canvas: Canvas) {
-            val cx = width / 2f
-            val cy = height / 2f
-            val r = minOf(width, height) * 0.2f
-            canvas.drawLine(cx - r, cy, cx + r, cy, paint)
-            canvas.drawLine(cx, cy - r, cx, cy + r, paint)
-        }
     }
 
     private fun file(c: Context) = java.io.File(c.filesDir, "kavexamples-notebook.json")
