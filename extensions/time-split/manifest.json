@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "name": "time-split",
+  "displayName": "Time split",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 45,
+  "api": 2,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "One line under each route in the results: how much of the trip is on board, waiting and walking.",
+  "runtime": "javascript",
+  "entry": "main.js",
+  "permissions": [],
+  "hosts": [],
+  "contributions": [
+    { "id": "line", "capability": "slot.results" }
+  ],
+  "reasons": {
+    "slot.results": { "en": "One short line under each route: its time on board, waiting and walking", "he": "שורה קצרה מתחת לכל מסלול: זמן הנסיעה, ההמתנה וההליכה בו" }
+  },
+  "settings": [
+    { "key": "show", "type": "choice", "label": { "en": "Show", "he": "להציג" }, "default": "all",
+      "options": [
+        { "value": "all", "label": { "en": "All three", "he": "את שלושתם" } },
+        { "value": "wait", "label": { "en": "Waiting only", "he": "רק המתנה" } },
+        { "value": "walk", "label": { "en": "Walking only", "he": "רק הליכה" } }
+      ] },
+    { "key": "quiet", "type": "toggle", "label": { "en": "Leave out parts under a minute", "he": "בלי חלקים של פחות מדקה" }, "default": true }
+  ]
+}

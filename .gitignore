@@ -1,0 +1,10 @@
+# Signing keys never go in the repository.
+*.pem
+node_modules/
+/dist/
+/*.kavx
+package-lock.json
+# kavx pack writes its compiled code here.
+extensions/*/build/
+test/
+package.json

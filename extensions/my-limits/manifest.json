@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "name": "my-limits",
+  "displayName": "My limits",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 45,
+  "api": 2,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "Hides routes with more changes or a longer walk than you set, and says why. Tags night rides and routes with short walks.",
+  "native": { "dex": "classes.dex", "entry": "uk.noammm.kavexamples.mylimits.MyLimits" },
+  "contributions": [
+    { "id": "limits", "capability": "results.filter" },
+    { "id": "tags", "capability": "results.annotate" }
+  ],
+  "tags": {
+    "night": { "en": "Night ride", "he": "נסיעת לילה" },
+    "short-walks": { "en": "Short walks", "he": "הליכות קצרות" }
+  },
+  "reasons": {
+    "results.filter": { "en": "Hides a route with more changes or a longer walk than you set", "he": "מסתיר מסלול עם יותר החלפות או הליכה ארוכה יותר ממה שהגדרתם" },
+    "results.annotate": { "en": "Tags night rides and routes whose walks are all short", "he": "מתייג נסיעות לילה ומסלולים שכל ההליכות בהם קצרות" }
+  },
+  "settings": [
+    { "key": "changes", "type": "number", "label": { "en": "Most changes", "he": "הכי הרבה החלפות" }, "min": 0, "max": 4, "default": 2 },
+    { "key": "walk", "type": "number", "label": { "en": "Longest walk, in minutes", "he": "ההליכה הארוכה ביותר, בדקות" }, "min": 1, "max": 40, "default": 15 },
+    { "key": "night", "type": "toggle", "label": { "en": "Tag night rides (23:00 to 05:00)", "he": "תיוג נסיעות לילה (23:00 עד 05:00)" }, "default": true },
+    { "key": "short", "type": "toggle", "label": { "en": "Tag routes whose walks are all under 5 minutes", "he": "תיוג מסלולים שכל ההליכות בהם קצרות מ-5 דקות" }, "default": true }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "format": 1,
+  "name": "stop-reminder",
+  "displayName": "Stop reminder",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 45,
+  "api": 2,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "A card on every stop board: one tap and a notification reminds you to head to that stop a few minutes later.",
+  "native": { "dex": "classes.dex", "entry": "uk.noammm.kavexamples.stopreminder.StopReminder" },
+  "contributions": [
+    { "id": "card", "capability": "slot.stop" }
+  ],
+  "reasons": {
+    "slot.stop": { "en": "A card on stop boards with a button that sets a reminder", "he": "כרטיס בלוחות התחנות עם כפתור שקובע תזכורת" }
+  },
+  "settings": [
+    { "key": "minutes", "type": "choice", "label": { "en": "Remind me in", "he": "להזכיר לי בעוד" }, "default": "5",
+      "options": [
+        { "value": "2", "label": { "en": "2 min", "he": "2 דק׳" } },
+        { "value": "5", "label": { "en": "5 min", "he": "5 דק׳" } },
+        { "value": "10", "label": { "en": "10 min", "he": "10 דק׳" } },
+        { "value": "15", "label": { "en": "15 min", "he": "15 דק׳" } }
+      ] },
+    { "key": "words", "type": "text", "label": { "en": "Words of the reminder (leave empty for Kav's)", "he": "נוסח התזכורת (ריק לנוסח הרגיל)" }, "maxLength": 80, "default": "" }
+  ]
+}

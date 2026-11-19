@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "name": "map-style",
+  "displayName": "Map style",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 45,
+  "api": 2,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "Draws Kav's stops on the Live tab your way, and pins a place of your own on Kav's maps.",
+  "native": { "dex": "classes.dex", "entry": "uk.noammm.kavexamples.mapstyle.MapStyle" },
+  "contributions": [],
+  "settings": [
+    { "key": "shape", "type": "choice", "label": { "en": "Stops look like", "he": "התחנות נראות כמו" }, "default": "pin",
+      "options": [
+        { "value": "pin", "label": { "en": "Pins", "he": "סיכות" } },
+        { "value": "square", "label": { "en": "Squares", "he": "ריבועים" } },
+        { "value": "dot", "label": { "en": "Dots", "he": "נקודות" } }
+      ] },
+    { "key": "colour", "type": "choice", "label": { "en": "Colour", "he": "צבע" }, "default": "teal",
+      "options": [
+        { "value": "teal", "label": { "en": "Teal", "he": "טורקיז" } },
+        { "value": "orange", "label": { "en": "Orange", "he": "כתום" } },
+        { "value": "purple", "label": { "en": "Purple", "he": "סגול" } },
+        { "value": "pink", "label": { "en": "Pink", "he": "ורוד" } }
+      ] },
+    { "key": "place", "type": "text", "label": { "en": "Your place, as latitude, longitude (32.0853, 34.7818)", "he": "המקום שלכם, כקו רוחב, קו אורך (32.0853, 34.7818)" }, "maxLength": 40, "default": "" },
+    { "key": "name", "type": "text", "label": { "en": "Its name", "he": "השם שלו" }, "maxLength": 30, "default": "" }
+  ]
+}

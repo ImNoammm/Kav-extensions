@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "name": "my-stop",
+  "displayName": "My stop",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 45,
+  "api": 2,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "A card on Kav's Home with the next departures from the stop you choose, from the timetable on your phone.",
+  "runtime": "javascript",
+  "entry": "main.js",
+  "permissions": [],
+  "hosts": [],
+  "contributions": [
+    { "id": "card", "capability": "slot.home" }
+  ],
+  "reasons": {
+    "slot.home": { "en": "A Home card with your stop's next departures", "he": "כרטיס בבית עם היציאות הבאות מהתחנה שלכם" }
+  },
+  "settings": [
+    { "key": "stop", "type": "text", "label": { "en": "Stop code (the number on the stop's sign)", "he": "קוד התחנה (המספר שעל השלט בתחנה)" }, "maxLength": 6, "default": "" },
+    { "key": "count", "type": "number", "label": { "en": "How many departures", "he": "כמה יציאות" }, "min": 1, "max": 8, "default": 3 },
+    { "key": "name", "type": "toggle", "label": { "en": "Show the stop above them", "he": "הצגת התחנה מעליהן" }, "default": true }
+  ]
+}
