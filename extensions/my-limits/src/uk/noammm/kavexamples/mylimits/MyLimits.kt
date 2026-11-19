@@ -8,7 +8,7 @@ import java.util.Calendar
 import java.util.TimeZone
 
 // My limits: two route rules. The filter hides a route with more changes or a longer walk than the rider set, with
-// the reason Kav shows under the results; the annotator adds two tags the manifest names in both languages. Each is
+// the reason Kav shows under the results; the annotator tags night rides, a tag the manifest names in both languages. Each is
 // one call per search with every route, answered with one entry per route in the same order.
 class MyLimits : KavExtension {
     override fun start(kav: Kav) {
@@ -32,7 +32,6 @@ class MyLimits : KavExtension {
             answer(input) { route ->
                 JSONArray().apply {
                     if (s.optBoolean("night", true) && atNight(route)) put("night")
-                    if (s.optBoolean("short", true) && longestWalk(route) < 5 && hasWalks(route)) put("short-walks")
                 }
             }
         }
@@ -46,8 +45,6 @@ class MyLimits : KavExtension {
     private fun legs(route: JSONObject) = route.getJSONArray("legs").let { a -> (0 until a.length()).map(a::getJSONObject) }
 
     private fun rides(route: JSONObject) = legs(route).count { it.optString("kind") == "ride" }
-
-    private fun hasWalks(route: JSONObject) = legs(route).any { it.optString("kind") == "walk" }
 
     // The longest walk, in whole minutes rounded up.
     private fun longestWalk(route: JSONObject) = legs(route).filter { it.optString("kind") == "walk" }

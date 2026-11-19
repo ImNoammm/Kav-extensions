@@ -41,7 +41,7 @@ class StopReminder : KavExtension {
                 words("Allow them in Android's settings for Kav.", "אפשרו אותן בהגדרות של Android עבור Kav."), null))
         } else if (w != null && w.first == stop) {
             box.addView(ui.row(c, "clock", words("Reminder at ", "תזכורת ב-") + time(w.second), stop, null))
-            box.addView(ui.button(c, words("Cancel it", "ביטול"), false) { cancel(); kav.log("cancelled") })
+            box.addView(ui.button(c, words("Cancel it", "ביטול"), false) { cancel(); kav.log("canceled") })
         } else {
             box.addView(ui.row(c, "clock", words("Remind me to go to this stop", "תזכירו לי ללכת לתחנה הזו"),
                 words("In $minutes minutes", "בעוד $minutes דקות"), null))
