@@ -51,7 +51,7 @@ Raise `release` and `version` in the manifest of each extension that changed and
 attach it to a new release:
 
 ```
-kavx bundle . --name "Kav extensions" --icon .github/icon.png --out kav-extensions.kavb
+kavx bundle . --name "Kav extensions" --icon .github/source-icon.png --out kav-extensions.kavb
 kavx verify kav-extensions.kavb
 gh release create v2 kav-extensions.kavb
 ```

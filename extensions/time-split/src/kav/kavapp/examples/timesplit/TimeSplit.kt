@@ -1,12 +1,12 @@
-package uk.noammm.kavexamples.timesplit
+package kav.kavapp.examples.timesplit
 
 import android.content.Context
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import org.json.JSONObject
-import uk.noammm.kav.api.Kav
-import uk.noammm.kav.api.KavExtension
+import kav.kavapp.api.Kav
+import kav.kavapp.api.KavExtension
 import kotlin.math.roundToInt
 
 // Time split: a line under each search result that splits the trip's time into on board, waiting and walking. Kav asks

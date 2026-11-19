@@ -2,13 +2,13 @@
   "format": 1,
   "name": "stop-reminder",
   "displayName": "Stop reminder",
-  "version": "1.0.1",
-  "release": 2,
+  "version": "1.0.2",
+  "release": 3,
   "minKav": 45,
   "api": 2,
   "issues": "https://github.com/ImNoammm/kav-extensions/issues",
   "description": "A card on every stop board: one tap and a notification reminds you to head to that stop a few minutes later.",
-  "native": { "dex": "classes.dex", "entry": "uk.noammm.kavexamples.stopreminder.StopReminder" },
+  "native": { "dex": "classes.dex", "entry": "kav.kavapp.examples.stopreminder.StopReminder" },
   "adds": ["notifications"],
   "contributions": [
     { "id": "card", "capability": "slot.stop" }

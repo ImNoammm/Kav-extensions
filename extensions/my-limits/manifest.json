@@ -2,13 +2,13 @@
   "format": 1,
   "name": "my-limits",
   "displayName": "My limits",
-  "version": "1.1.0",
-  "release": 2,
+  "version": "1.1.1",
+  "release": 3,
   "minKav": 45,
   "api": 2,
   "issues": "https://github.com/ImNoammm/kav-extensions/issues",
   "description": "Hides routes with more changes or a longer walk than you set, and says why. Tags night rides.",
-  "native": { "dex": "classes.dex", "entry": "uk.noammm.kavexamples.mylimits.MyLimits" },
+  "native": { "dex": "classes.dex", "entry": "kav.kavapp.examples.mylimits.MyLimits" },
   "contributions": [
     { "id": "limits", "capability": "results.filter" },
     { "id": "tags", "capability": "results.annotate" }

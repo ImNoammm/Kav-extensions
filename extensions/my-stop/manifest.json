@@ -2,15 +2,15 @@
   "format": 1,
   "name": "my-stop",
   "displayName": "My stop",
-  "version": "2.0.0",
-  "release": 2,
+  "version": "2.0.2",
+  "release": 4,
   "minKav": 45,
   "api": 2,
   "issues": "https://github.com/ImNoammm/kav-extensions/issues",
   "description": "A card on Kav's Home with the next departures from the stop you choose, from the timetable on your phone.",
   "native": {
     "dex": "classes.dex",
-    "entry": "uk.noammm.kavexamples.mystop.MyStop"
+    "entry": "kav.kavapp.examples.mystop.MyStop"
   },
   "contributions": [
     {
@@ -44,15 +44,6 @@
       "max": 8,
       "step": 1,
       "default": 3
-    },
-    {
-      "key": "name",
-      "type": "toggle",
-      "label": {
-        "en": "Show the stop",
-        "he": "הצגת התחנה"
-      },
-      "default": true
     }
   ]
 }

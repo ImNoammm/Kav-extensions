@@ -1,9 +1,9 @@
-package uk.noammm.kavexamples.mylimits
+package kav.kavapp.examples.mylimits
 
 import org.json.JSONArray
 import org.json.JSONObject
-import uk.noammm.kav.api.Kav
-import uk.noammm.kav.api.KavExtension
+import kav.kavapp.api.Kav
+import kav.kavapp.api.KavExtension
 import java.util.Calendar
 import java.util.TimeZone
 

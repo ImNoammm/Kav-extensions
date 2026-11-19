@@ -2,15 +2,15 @@
   "format": 1,
   "name": "time-split",
   "displayName": "Time split",
-  "version": "2.0.0",
-  "release": 2,
+  "version": "2.0.1",
+  "release": 3,
   "minKav": 45,
   "api": 2,
   "issues": "https://github.com/ImNoammm/kav-extensions/issues",
   "description": "One line under each route in the results: how much of the trip is on board, waiting and walking.",
   "native": {
     "dex": "classes.dex",
-    "entry": "uk.noammm.kavexamples.timesplit.TimeSplit"
+    "entry": "kav.kavapp.examples.timesplit.TimeSplit"
   },
   "contributions": [
     {

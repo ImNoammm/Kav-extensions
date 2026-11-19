@@ -1,4 +1,4 @@
-package uk.noammm.kavexamples.mapstyle
+package kav.kavapp.examples.mapstyle
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,9 +17,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import org.json.JSONObject
-import uk.noammm.kav.api.Kav
-import uk.noammm.kav.api.KavExtension
-import uk.noammm.kav.api.KavMap
+import kav.kavapp.api.Kav
+import kav.kavapp.api.KavExtension
+import kav.kavapp.api.KavMap
 
 // Map style: Kav's stop marks on the Live tab drawn in a shape the rider picks (a declared setting) and a colour picked
 // on a colour picker of its own (its settings view, Kav.settingsScreen), and a pin for a place the rider chooses with
@@ -169,10 +169,11 @@ class MapStyle : KavExtension {
         val r = size * 0.32f
         val cx = size / 2f
         val cy = r + size * 0.06f
-        val shape = Path().apply {
-            addCircle(cx, cy, r, Path.Direction.CW)
+        // One outline: the head and the point joined, so the ring doesn't cross the point.
+        val shape = Path().apply { addCircle(cx, cy, r, Path.Direction.CW) }
+        shape.op(Path().apply {
             moveTo(cx - r * 0.75f, cy + r * 0.6f); lineTo(cx, size.toFloat()); lineTo(cx + r * 0.75f, cy + r * 0.6f); close()
-        }
+        }, Path.Op.UNION)
         p.color = fill; c.drawPath(shape, p)
         p.style = Paint.Style.STROKE; p.strokeWidth = size / 14f; p.color = ring; c.drawPath(shape, p)
         p.style = Paint.Style.FILL; p.color = 0xFFFFFFFF.toInt(); c.drawCircle(cx, cy, r * 0.4f, p)

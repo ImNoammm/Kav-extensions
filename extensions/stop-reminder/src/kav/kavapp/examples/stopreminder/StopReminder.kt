@@ -1,4 +1,4 @@
-package uk.noammm.kavexamples.stopreminder
+package kav.kavapp.examples.stopreminder
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -10,8 +10,8 @@ import android.os.Looper
 import android.view.View
 import android.widget.LinearLayout
 import org.json.JSONObject
-import uk.noammm.kav.api.Kav
-import uk.noammm.kav.api.KavExtension
+import kav.kavapp.api.Kav
+import kav.kavapp.api.KavExtension
 import java.text.DateFormat
 import java.util.Date
 

@@ -2,13 +2,13 @@
   "format": 1,
   "name": "notebook",
   "displayName": "Notebook",
-  "version": "1.0.0",
-  "release": 1,
+  "version": "1.0.1",
+  "release": 2,
   "minKav": 45,
   "api": 2,
   "issues": "https://github.com/ImNoammm/kav-extensions/issues",
   "description": "A tab of its own for short notes: a stop code, a line to remember, a platform. Kept on your phone only.",
-  "native": { "dex": "classes.dex", "entry": "uk.noammm.kavexamples.notebook.Notebook" },
+  "native": { "dex": "classes.dex", "entry": "kav.kavapp.examples.notebook.Notebook" },
   "contributions": [
     { "id": "screens", "capability": "page.provide" }
   ],

@@ -1,4 +1,4 @@
-package uk.noammm.kavexamples.mystop
+package kav.kavapp.examples.mystop
 
 import android.content.Context
 import android.os.Handler
@@ -7,14 +7,14 @@ import android.view.View
 import android.widget.FrameLayout
 import org.json.JSONArray
 import org.json.JSONObject
-import uk.noammm.kav.api.Kav
-import uk.noammm.kav.api.KavExtension
+import kav.kavapp.api.Kav
+import kav.kavapp.api.KavExtension
 import java.lang.ref.WeakReference
 
 // My stop: a Home card with the next departures from one stop. The rider picks the stop with Kav's own stop picker (a
-// "stop" setting) and how many departures with a stepper (a "number" setting). The card is made of Kav's own blocks:
-// "stop" is Kav's row for a stop and "departures" its next timetabled departures, both from what is already on the
-// phone, so it asks nothing of the internet. A change in its settings draws the card again at once.
+// "stop" setting) and how many departures with a stepper (a "number" setting). The card is Kav's own "departures" block:
+// the stop's name and its next timetabled departures, from what is already on the phone, so it asks nothing of the
+// internet. A change in its settings draws the card again at once.
 class MyStop : KavExtension {
     private lateinit var kav: Kav
     private val main = Handler(Looper.getMainLooper())
@@ -45,8 +45,8 @@ class MyStop : KavExtension {
             blocks.put(JSONObject().put("type", "button").put("label", words("Open settings", "פתיחת ההגדרות")).put("icon", "settings")
                 .put("action", JSONObject().put("settings", true)))
         } else {
+            // The stop once, as the departures' header (Kav's "departures" block names it): no row of its own.
             val ref = "il.mot/gtfs/stop/$code"
-            if (s.optBoolean("name", true)) blocks.put(JSONObject().put("type", "stop").put("ref", ref))
             blocks.put(JSONObject().put("type", "departures").put("ref", ref).put("limit", s.optDouble("count", 3.0).toInt()))
         }
         val tree = JSONObject().put("sections", JSONArray().put(JSONObject().put("blocks", blocks)))
