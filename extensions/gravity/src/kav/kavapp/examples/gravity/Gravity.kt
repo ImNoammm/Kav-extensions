@@ -37,8 +37,9 @@ import kotlin.random.Random
 // seconds, a tap, Back or another shake they fly back to their places, and Kav's own screen is there again as it was.
 //
 // It is one view over the whole screen (the part "screen.overlay"), which draws nothing and takes no touch until the
-// phone is shaken. Then it asks Kav for a picture of the screen and its pieces' boxes (Kav.capture), draws the picture
-// over Kav's screen with each piece's place painted over, and draws each piece where the physics (Physics.kt) has it.
+// phone is shaken. Then it asks Kav for a picture of the screen, the same screen without its pieces, and the pieces'
+// boxes (Kav.captureBehind), draws the screen without its pieces over Kav's, and on it each piece, cut from the picture,
+// where the physics (Physics.kt) has it.
 // Kav's screen under it isn't touched. The accelerometer is listened to only while the view is on the screen, so only
 // while Gravity is on and Kav is in front, and slowly until a shake.
 class Gravity : KavExtension {
@@ -65,7 +66,7 @@ class Gravity : KavExtension {
 private enum class State { WAIT, ASKING, LOOSE, BACK }
 
 // One piece of the screen: where it was (in the picture's pixels), its body, and where it was when it started back.
-private class Piece(val home: Rect, val hole: Int, val body: Body) {
+private class Piece(val home: Rect, val body: Body) {
     var fromX = 0f
     var fromY = 0f
     var fromAngle = 0f
@@ -78,12 +79,12 @@ private class Loose(c: Context, val kav: Kav, val strength: Float, val backAfter
     private val accelerometer = sensors?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     private val slop = ViewConfiguration.get(c).scaledTouchSlop
     private val paint = Paint(Paint.FILTER_BITMAP_FLAG or Paint.ANTI_ALIAS_FLAG)
-    private val holePaint = Paint()
     private val dst = RectF()
 
     private var state = State.WAIT
     private var listening = 0
     private var picture: Bitmap? = null
+    private var behind: Bitmap? = null
     private var pieces = emptyList<Piece>()
     private var world = World()
     private var meter = 1f
@@ -180,19 +181,20 @@ private class Loose(c: Context, val kav: Kav, val strength: Float, val backAfter
     private fun ask() {
         if (width == 0 || height == 0) return
         state = State.ASKING
-        kav.capture { shot, boxes ->
-            if (state != State.ASKING || !isAttachedToWindow || shot == null) {
-                shot?.recycle()
+        kav.captureBehind { shot, under, boxes ->
+            if (state != State.ASKING || !isAttachedToWindow || shot == null || under == null) {
+                shot?.recycle(); under?.recycle()
                 if (state == State.ASKING) state = State.WAIT
-                return@capture
+                return@captureBehind
             }
-            fall(shot, JSONArray(boxes))
+            fall(shot, under, JSONArray(boxes))
         }
     }
 
     // The pieces come loose: a body for each, the screen's edges as walls, and a little push to start them off.
-    private fun fall(shot: Bitmap, boxes: JSONArray) {
+    private fun fall(shot: Bitmap, under: Bitmap, boxes: JSONArray) {
         picture = shot
+        behind = under
         meter = shot.height / 6f
         world = World().apply { iterations = 10 }
         val kept = ArrayList<Piece>()
@@ -212,10 +214,10 @@ private class Loose(c: Context, val kav: Kav, val strength: Float, val backAfter
                 vy = -Random.nextFloat() * 1.4f * strength
                 spin = (Random.nextFloat() - 0.5f) * 3f * strength
             }
-            kept += Piece(r, around(shot, r), body)
+            kept += Piece(r, body)
             world.add(body)
         }
-        if (kept.isEmpty()) { shot.recycle(); picture = null; state = State.WAIT; return }
+        if (kept.isEmpty()) { shot.recycle(); under.recycle(); picture = null; behind = null; state = State.WAIT; return }
         val wm = shot.width / meter; val hm = shot.height / meter; val t = 4f
         fun wall(x: Float, y: Float, w: Float, h: Float) = world.add(Body(w, h, Float.POSITIVE_INFINITY).apply {
             this.x = x; this.y = y; friction = 0.5f; bounce = 0.3f
@@ -243,20 +245,6 @@ private class Loose(c: Context, val kav: Kav, val strength: Float, val backAfter
         val w = min(a.right, b.right) - max(a.left, b.left)
         val h = min(a.bottom, b.bottom) - max(a.top, b.top)
         return if (w > 0 && h > 0) w * h else 0
-    }
-
-    // The color the screen has around a piece, for the place it leaves: the most common of a few pixels just outside it.
-    private fun around(shot: Bitmap, r: Rect): Int {
-        val seen = HashMap<Int, Int>()
-        val xs = intArrayOf(r.left - 3, r.centerX(), r.right + 2)
-        val ys = intArrayOf(r.top - 3, r.centerY(), r.bottom + 2)
-        for (x in xs) for (y in ys) {
-            if (x == r.centerX() && y == r.centerY()) continue
-            if (x < 0 || y < 0 || x >= shot.width || y >= shot.height) continue
-            val p = shot.getPixel(x, y)
-            seen[p] = (seen[p] ?: 0) + 1
-        }
-        return seen.maxByOrNull { it.value }?.key ?: shot.getPixel(r.centerX().coerceIn(0, shot.width - 1), r.centerY().coerceIn(0, shot.height - 1))
     }
 
     override fun doFrame(frameTimeNanos: Long) {
@@ -307,6 +295,8 @@ private class Loose(c: Context, val kav: Kav, val strength: Float, val backAfter
         world = World()
         picture?.recycle()
         picture = null
+        behind?.recycle()
+        behind = null
         if (hasFocus()) {
             isFocusable = false
             val before = focusBefore
@@ -321,9 +311,9 @@ private class Loose(c: Context, val kav: Kav, val strength: Float, val backAfter
 
     override fun onDraw(canvas: Canvas) {
         val shot = picture ?: return
+        val under = behind ?: return
         if (state != State.LOOSE && state != State.BACK) return
-        canvas.drawBitmap(shot, 0f, 0f, null)
-        for (p in pieces) { holePaint.color = p.hole; canvas.drawRect(p.home, holePaint) }
+        canvas.drawBitmap(under, 0f, 0f, null)
         val now = SystemClock.uptimeMillis()
         for (p in pieces) {
             val cx: Float; val cy: Float; val deg: Float
