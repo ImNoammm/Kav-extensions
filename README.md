@@ -33,7 +33,7 @@ To add it by hand: in Kav open Settings, Extensions, Sources, the plus, and ente
 | My limits | Route rules: hides routes with more changes or a longer walk than you set, with the reason, and tags night rides. |
 | Stop reminder | A card on stop boards; one tap and a notification reminds you to head to the stop a few minutes later. |
 | Time split | A line under each search result: time on board, waiting and walking. |
-| Shimeji | A little bus that lives on top of the tab bar: it walks, looks around, naps when left alone, hops when you tap it, and goes where you drag it. Drawn by the extension itself in Kav's colors. |
+| Shimeji | A little bus that lives on Kav's screen: it walks along the bottom, climbs the sides, hangs from the top, and sits and walks on cards. It looks around, naps when left alone and hops when you tap it; pick it up and throw it, and it falls, bounces and lands. Drawn by the extension itself in Kav's colors. It keeps only the places of the screen's pieces, never the picture. |
 | Gravity | Shake the phone and Kav's screen comes loose: its buttons, rows and texts fall, bounce and slide as you tilt the phone, then fly back to their places after a few seconds, a tap or another shake. It uses Kav's screen picture, the same screen without its pieces, and the pieces' boxes, never what you type. |
 
 All five are Kotlin. Each one has settings, on its page in Settings, Extensions. Problems go to this repository's issues.

@@ -2,18 +2,21 @@
   "format": 1,
   "name": "shimeji",
   "displayName": "Shimeji",
-  "version": "1.0.0",
-  "release": 1,
-  "minKav": 47,
-  "api": 4,
+  "version": "2.0.0",
+  "release": 2,
+  "minKav": 48,
+  "api": 5,
   "issues": "https://github.com/ImNoammm/kav-extensions/issues",
-  "description": "A little bus that lives on top of Kav's tab bar: it walks, sits, naps, hops when you tap it, and goes where you carry it.",
+  "description": "A little bus that lives on Kav's screen: it walks, climbs the sides, hangs from the top, sits on cards and naps. Tap it and it hops; pick it up and throw it.",
+  "descriptionHe": "אוטובוס קטן שגר על המסך של Kav: הוא הולך, מטפס על הצדדים, נתלה מלמעלה, יושב על כרטיסים ומנמנם. נוגעים בו והוא קופץ; אפשר להרים אותו ולזרוק.",
   "native": { "dex": "classes.dex", "entry": "kav.kavapp.examples.shimeji.Shimeji" },
   "contributions": [
-    { "id": "buddy", "capability": "part.tabbar" }
+    { "id": "buddy", "capability": "part.screen.overlay" },
+    { "id": "cards", "capability": "screen.capture" }
   ],
   "reasons": {
-    "parts": { "en": "A little bus that walks along the top of the tab bar", "he": "אוטובוס קטן שמטייל על סרגל הלשוניות" }
+    "parts": { "en": "A little bus that walks all over the screen", "he": "אוטובוס קטן שמטייל על כל המסך" },
+    "screen.capture": { "en": "To sit and walk on cards, it needs to know where they are; it keeps only their places, never the picture", "he": "כדי לשבת וללכת על כרטיסים הוא צריך לדעת איפה הם; הוא שומר רק את המקומות שלהם, אף פעם לא את התמונה" }
   },
   "settings": [
     { "key": "size", "type": "choice", "label": { "en": "Size", "he": "גודל" }, "default": "medium",
