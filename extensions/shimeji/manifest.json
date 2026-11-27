@@ -1,0 +1,32 @@
+{
+  "format": 1,
+  "name": "shimeji",
+  "displayName": "Shimeji",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 47,
+  "api": 4,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "A little bus that lives on top of Kav's tab bar: it walks, sits, naps, hops when you tap it, and goes where you carry it.",
+  "native": { "dex": "classes.dex", "entry": "kav.kavapp.examples.shimeji.Shimeji" },
+  "contributions": [
+    { "id": "buddy", "capability": "part.tabbar" }
+  ],
+  "reasons": {
+    "parts": { "en": "A little bus that walks along the top of the tab bar", "he": "אוטובוס קטן שמטייל על סרגל הלשוניות" }
+  },
+  "settings": [
+    { "key": "size", "type": "choice", "label": { "en": "Size", "he": "גודל" }, "default": "medium",
+      "options": [
+        { "value": "small", "label": { "en": "Small", "he": "קטן" } },
+        { "value": "medium", "label": { "en": "Medium", "he": "בינוני" } },
+        { "value": "large", "label": { "en": "Large", "he": "גדול" } }
+      ] },
+    { "key": "where", "type": "choice", "label": { "en": "Shows on", "he": "איפה הוא מופיע" }, "default": "all",
+      "options": [
+        { "value": "all", "label": { "en": "Every tab", "he": "בכל הלשוניות" } },
+        { "value": "home", "label": { "en": "Home only", "he": "רק בבית" } }
+      ] },
+    { "key": "naps", "type": "toggle", "label": { "en": "Naps when left alone", "he": "נרדם כשלא נוגעים בו" }, "default": true }
+  ]
+}

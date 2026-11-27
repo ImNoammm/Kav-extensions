@@ -30,14 +30,12 @@ To add it by hand: in Kav open Settings, Extensions, Sources, the plus, and ente
 
 | Extension | What it shows |
 |---|---|
-| Map style | Kav's stops on the Live tab drawn as pins, squares or dots in a color you pick on its own color picker, and a pin for a place you choose with Kav's place search. Redraws the moment a setting changes. |
 | My limits | Route rules: hides routes with more changes or a longer walk than you set, with the reason, and tags night rides. |
 | Stop reminder | A card on stop boards; one tap and a notification reminds you to head to the stop a few minutes later. |
-| Notebook | A screen of its own that you can show as a tab, built from Kav's own components. |
-| My stop | A Home card with the next departures from a stop you pick with Kav's stop picker. |
 | Time split | A line under each search result: time on board, waiting and walking. |
+| Shimeji | A little bus that lives on top of the tab bar: it walks, looks around, naps when left alone, hops when you tap it, and goes where you drag it. Drawn by the extension itself in Kav's colors. |
 
-All six are Kotlin. Each one has settings, on its page in Settings, Extensions. Problems go to this repository's issues.
+All four are Kotlin. Each one has settings, on its page in Settings, Extensions. Problems go to this repository's issues.
 
 ## For developers
 
