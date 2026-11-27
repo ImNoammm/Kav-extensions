@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "name": "gravity",
+  "displayName": "Gravity",
+  "version": "1.0.0",
+  "release": 1,
+  "minKav": 48,
+  "api": 5,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "Shake your phone and Kav's screen comes loose: its pieces fall, bounce and slide as you tilt the phone, then fly back to their places.",
+  "native": { "dex": "classes.dex", "entry": "kav.kavapp.examples.gravity.Gravity" },
+  "contributions": [
+    { "id": "over", "capability": "part.screen.overlay" },
+    { "id": "see", "capability": "screen.capture" }
+  ],
+  "reasons": {
+    "parts": { "en": "Draws the screen's pieces falling, over the whole screen", "he": "מצייר את חלקי המסך נופלים, מעל כל המסך" },
+    "screen.capture": { "en": "To make the pieces you see fall, it needs a picture of them", "he": "כדי להפיל את החלקים שרואים, הוא צריך תמונה שלהם" }
+  },
+  "settings": [
+    { "key": "on", "type": "toggle", "label": { "en": "Shake to drop", "he": "ניעור מפיל" }, "default": true },
+    { "key": "strength", "type": "choice", "label": { "en": "Strength", "he": "עוצמה" }, "default": "normal",
+      "options": [
+        { "value": "gentle", "label": { "en": "Gentle", "he": "עדינה" } },
+        { "value": "normal", "label": { "en": "Normal", "he": "רגילה" } },
+        { "value": "strong", "label": { "en": "Strong", "he": "חזקה" } }
+      ] },
+    { "key": "back", "type": "number", "label": { "en": "Back after", "he": "חוזר אחרי" }, "min": 2, "max": 30, "default": 6,
+      "unit": { "en": "s", "he": "שנ׳" } }
+  ]
+}
