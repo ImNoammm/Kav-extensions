@@ -1,0 +1,1 @@
+Tahoma is Microsoft's font, the one Windows XP draws its windows with. It is not a free font: it belongs to Microsoft and comes from a copy of Windows.

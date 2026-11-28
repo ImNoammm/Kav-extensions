@@ -1,0 +1,22 @@
+{
+  "format": 1, "kind": "theme", "minKav": 48, "api": 5,
+  "name": "gruvbox", "displayName": "Gruvbox", "version": "1.0.0", "release": 1,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "description": "The warm retro palette loved in code editors: Gruvbox's own colors in its dark and light versions, and the hard dark one for black screens.",
+  "descriptionHe": "הצבעים החמים בסגנון רטרו שאוהבים בעורכי קוד: הצבעים של Gruvbox עצמו, בגרסה הכהה ובגרסה הבהירה, והגרסה הכהה בניגודיות גבוהה למסכים שחורים.",
+  "contributions": [],
+  "theme": {
+    "looks": {
+      "dark": {"bg": "#282828", "surface": "#32302F", "surfaceRaised": "#3C3836", "fill": "#3C3836", "fillStrong": "#504945", "separator": "#504945", "text": "#EBDBB2", "textSecondary": "#D5C4A1", "textTertiary": "#A89984", "surface2": "#3C3836", "surface3": "#504945", "surface4": "#665C54", "borderStrong": "#7C6F64", "sunken": "#1D2021", "routeIdle": "#928374", "problem": "#FE8019", "critical": "#FB4934", "realtime": "#B8BB26", "accent": "#FABD2F"},
+      "oled": {"bg": "#1D2021", "surface": "#282828", "surfaceRaised": "#32302F", "fill": "#32302F", "fillStrong": "#3C3836", "separator": "#3C3836", "text": "#EBDBB2", "textSecondary": "#D5C4A1", "textTertiary": "#A89984", "surface2": "#32302F", "surface3": "#3C3836", "surface4": "#504945", "borderStrong": "#7C6F64", "sunken": "#1D2021", "routeIdle": "#928374", "problem": "#FE8019", "critical": "#FB4934", "realtime": "#B8BB26", "accent": "#FABD2F"},
+      "light": {"bg": "#FBF1C7", "surface": "#F9F5D7", "surfaceRaised": "#F9F5D7", "fill": "#EBDBB2", "fillStrong": "#D5C4A1", "separator": "#D5C4A1", "text": "#3C3836", "textSecondary": "#504945", "textTertiary": "#665C54", "surface2": "#F2E5BC", "surface3": "#EBDBB2", "surface4": "#D5C4A1", "borderStrong": "#A89984", "sunken": "#F2E5BC", "routeIdle": "#A89984", "problem": "#AF3A03", "critical": "#9D0006", "realtime": "#79740E", "accent": "#D79921"}
+    },
+    "lineBadges": "kav",
+    "corners": {"card": 8, "sheet": 12, "tile": 4, "badge": 4, "control": 6},
+    "map": {
+      "dark": {"ground": "#282828", "ink": "#EBDBB2", "water": "#2E4A4E"},
+      "oled": {"ground": "#1D2021", "ink": "#D5C4A1", "water": "#233A3D"},
+      "light": {"ground": "#FBF1C7", "ink": "#3C3836", "water": "#B9D2C6"}
+    }
+  }
+}

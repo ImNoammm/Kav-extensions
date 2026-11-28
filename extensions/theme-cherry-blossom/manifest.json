@@ -1,0 +1,24 @@
+{
+  "format": 1, "kind": "theme", "minKav": 48, "api": 5,
+  "name": "cherry-blossom", "displayName": "Cherry blossom", "version": "1.0.0", "release": 1,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "displayNameHe": "פריחת הדובדבן",
+  "description": "Soft pinks and round, gentle corners, with a rounded type. Petal pink by day and a night under the blossoms in the dark.",
+  "descriptionHe": "ורודים רכים ופינות עגולות ועדינות, עם גופן מעוגל. ורוד של עלי כותרת ביום, ולילה מתחת לפריחה במראה הכהה.",
+  "contributions": [],
+  "theme": {
+    "looks": {
+      "light": {"bg": "#FFF4F6", "surface": "#FFFFFF", "surfaceRaised": "#FFFFFF", "fill": "#FBE3EA", "fillStrong": "#F6CFDB", "separator": "#F2D3DC", "text": "#3A2230", "textSecondary": "#644452", "textTertiary": "#7E5C6C", "surface2": "#FBE7EC", "surface3": "#F5D5DE", "surface4": "#EBBACA", "borderStrong": "#D99AAE", "sunken": "#FCEBEF", "routeIdle": "#C7A2B0", "problem": "#93600A", "critical": "#B8324F", "realtime": "#1F7F55", "accent": "#F7A8C0"},
+      "dark": {"bg": "#1F1519", "surface": "#2A1D23", "surfaceRaised": "#33242B", "fill": "#3A2830", "fillStrong": "#4A323D", "separator": "#4D3540", "text": "#FBEFF3", "textSecondary": "#E3C9D3", "textTertiary": "#B897A6", "surface2": "#362730", "surface3": "#42303A", "surface4": "#563E4A", "borderStrong": "#A97A8D", "sunken": "#1A1115", "routeIdle": "#8E7480", "problem": "#F0C77E", "critical": "#FF9DB0", "realtime": "#6EE0A6", "accent": "#F9B8CC"},
+      "oled": {"bg": "#000000", "surface": "#140C10", "surfaceRaised": "#1E1318", "fill": "#271A20", "fillStrong": "#38252E", "separator": "#3E2A33", "text": "#FBEFF3", "textSecondary": "#E3C9D3", "textTertiary": "#B897A6", "surface2": "#21161B", "surface3": "#2D1F25", "surface4": "#433039", "borderStrong": "#A97A8D", "sunken": "#000000", "routeIdle": "#8E7480", "problem": "#F0C77E", "critical": "#FF9DB0", "realtime": "#6EE0A6", "accent": "#F9B8CC"}
+    },
+    "lineBadges": "kav",
+    "corners": {"card": 26, "sheet": 32, "tile": 16, "badge": 10},
+    "font": "fonts/VarelaRound-Regular.ttf",
+    "map": {
+      "light": {"ground": "#FFF4F6", "ink": "#6B3A50", "water": "#E3DDF5"},
+      "dark": {"ground": "#1F1519", "ink": "#E3C9D3", "water": "#2E2440"},
+      "oled": {"ground": "#000000", "ink": "#B897A6", "water": "#1A1222"}
+    }
+  }
+}

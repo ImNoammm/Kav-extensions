@@ -1,0 +1,36 @@
+{
+  "format": 1, "kind": "theme", "minKav": 48, "api": 5,
+  "name": "windows-xp", "displayName": "Windows XP", "version": "1.0.0", "release": 1,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "displayNameHe": "Windows XP",
+  "description": "Windows XP as it was: Luna's blue title bars, the green Start button on the blue taskbar, its own push buttons and windows, Tahoma, and Bliss behind it all. One look, the same in light and dark.",
+  "descriptionHe": "Windows XP כמו שהיה: פסי הכותרת הכחולים של Luna, כפתור ההתחלה הירוק על שורת המשימות הכחולה, הכפתורים והחלונות שלו, הגופן Tahoma ו־Bliss ברקע. מראה אחד, זהה בבהיר ובכהה.",
+  "contributions": [],
+  "theme": {
+    "looks": {
+      "light": {"bg": "#ECE9D8", "surface": "#FFFFFF", "surfaceRaised": "#FFFFFF", "fill": "#F4F3EE", "fillStrong": "#C1D2EE", "separator": "#ACA899", "text": "#000000", "textSecondary": "#333333", "textTertiary": "#5E5E5E", "surface2": "#F1EFE2", "surface3": "#E3E0CE", "surface4": "#D4D0C8", "borderStrong": "#7F9DB9", "sunken": "#EBEBE4", "routeIdle": "#8C9DBF", "problem": "#A05A00", "critical": "#C00000", "realtime": "#1E7B1E", "accent": "#316AC5"},
+      "dark": {"bg": "#ECE9D8", "surface": "#FFFFFF", "surfaceRaised": "#FFFFFF", "fill": "#F4F3EE", "fillStrong": "#C1D2EE", "separator": "#ACA899", "text": "#000000", "textSecondary": "#333333", "textTertiary": "#5E5E5E", "surface2": "#F1EFE2", "surface3": "#E3E0CE", "surface4": "#D4D0C8", "borderStrong": "#7F9DB9", "sunken": "#EBEBE4", "routeIdle": "#8C9DBF", "problem": "#A05A00", "critical": "#C00000", "realtime": "#1E7B1E", "accent": "#316AC5"},
+      "oled": {"bg": "#ECE9D8", "surface": "#FFFFFF", "surfaceRaised": "#FFFFFF", "fill": "#F4F3EE", "fillStrong": "#C1D2EE", "separator": "#ACA899", "text": "#000000", "textSecondary": "#333333", "textTertiary": "#5E5E5E", "surface2": "#F1EFE2", "surface3": "#E3E0CE", "surface4": "#D4D0C8", "borderStrong": "#7F9DB9", "sunken": "#EBEBE4", "routeIdle": "#8C9DBF", "problem": "#A05A00", "critical": "#C00000", "realtime": "#1E7B1E", "accent": "#316AC5"}
+    },
+    "lineBadges": "kav",
+    "corners": {"card": 0, "sheet": 4, "tile": 3, "badge": 3, "control": 3},
+    "font": "fonts/Tahoma.ttf",
+    "skin": {
+      "topBar": {"image": "skin/topBar.png", "insets": [112, 0, 140, 0], "scale": 0.75, "ink": "#FFFFFF"},
+      "tabBar": {"image": "skin/tabBar.png", "insets": [0, 15, 0, 11], "scale": 2, "ink": "#FFFFFF"},
+      "tabSelected": {"image": "skin/tabSelected.png", "insets": [6, 13, 16, 14], "scale": 1.7, "ink": "#FFFFFF"},
+      "button": {"image": "skin/button.png", "insets": [8, 9, 8, 9], "scale": 1.5, "ink": "#000000"},
+      "buttonPressed": {"image": "skin/buttonPressed.png", "insets": [8, 9, 8, 9], "scale": 1.5, "ink": "#000000"},
+      "buttonPrimary": {"image": "skin/buttonPrimary.png", "insets": [8, 9, 8, 9], "scale": 1.5, "ink": "#000000"},
+      "card": {"image": "skin/card.png", "insets": [5, 0, 5, 5], "scale": 1.25},
+      "cardTitle": {"image": "skin/cardTitle.png", "insets": [24, 4, 37, 3], "scale": 1.25},
+      "field": {"image": "skin/field.png", "insets": [1, 1, 1, 1], "scale": 1.5},
+      "background": "skin/bliss.jpg"
+    },
+    "map": {
+      "light": {"ground": "#ECE9D8", "ink": "#00309C", "water": "#A6CAF0"},
+      "dark": {"ground": "#ECE9D8", "ink": "#00309C", "water": "#A6CAF0"},
+      "oled": {"ground": "#ECE9D8", "ink": "#00309C", "water": "#A6CAF0"}
+    }
+  }
+}

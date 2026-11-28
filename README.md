@@ -38,6 +38,36 @@ To add it by hand: in Kav open Settings, Extensions, Sources, the plus, and ente
 
 All five are Kotlin. Each one has settings, on its page in Settings, Extensions. Problems go to this repository's issues.
 
+## Themes
+
+A theme changes how all of Kav looks: its colors in the light, dark and black screen looks, its corners, its type, the
+outline drawn around cards and buttons, and the colors of Kav's map. Pick one in Settings, Look and language. A theme
+has no code, only its `manifest.json` and, for most, a font; Windows XP also has pictures it draws some of Kav's parts
+with.
+
+| Theme | What it looks like |
+|---|---|
+| Windows XP | Windows XP as it was: Luna's blue title bars, the green Start button on the blue taskbar, its push buttons and windows, Tahoma, and Bliss behind it. One look, the same in light and dark. |
+| Scribble | Kav drawn by hand: pencil outlines that never quite close, handwriting, cream paper and a yellow highlighter. Dark is a chalkboard. |
+| Cherry blossom | Soft pinks, round corners and a rounded type. Petal pink by day, a night under the blossoms in the dark. |
+| Gruvbox | Gruvbox's own warm colors, in its dark and light versions and the hard dark one for black screens. |
+| Terminal | Kav as a text terminal: monospace type, square corners, boxes in double lines and green on black. The black screen look is amber. |
+
+The fonts come with the themes, each under its own license, which is in the theme's `fonts` folder (Windows XP's has a
+note instead):
+
+| Theme | Font | License |
+|---|---|---|
+| Scribble | Playpen Sans Hebrew, by TypeTogether | [SIL Open Font License 1.1](https://openfontlicense.org) |
+| Cherry blossom | Varela Round | [SIL Open Font License 1.1](https://openfontlicense.org) |
+| Terminal | Liberation Mono | [SIL Open Font License 1.1](https://openfontlicense.org) |
+| Windows XP | Tahoma | Microsoft's own font, not a free one |
+
+Gruvbox uses Kav's own type. Its colors are from [Gruvbox](https://github.com/morhetz/gruvbox) by Pavel Pertsev, under
+the MIT license. Windows XP's pictures are cut from Windows XP's own Luna style, and its background is Bliss, the
+photograph by Charles O'Rear that Windows XP came with; both are Microsoft's. The fonts make the bundle about 1.1 MB
+larger; Tahoma and Scribble's handwriting are most of that.
+
 ## For developers
 
 Each extension is a folder under `extensions/`: its `manifest.json` and its Kotlin under `src/`. They are built with

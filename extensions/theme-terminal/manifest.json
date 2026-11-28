@@ -1,0 +1,25 @@
+{
+  "format": 1, "kind": "theme", "minKav": 48, "api": 5,
+  "name": "terminal", "displayName": "Terminal", "version": "1.0.0", "release": 1,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "displayNameHe": "טרמינל",
+  "description": "Kav as a text terminal: monospace type, square corners, boxes drawn in double lines and phosphor green on black. The black screen look is amber.",
+  "descriptionHe": "כל Kav כממשק טקסט של טרמינל: גופן ברוחב קבוע, פינות מרובעות, תיבות בקווים כפולים וירוק זרחני על שחור. המראה למסך שחור הוא בצבע ענבר.",
+  "contributions": [],
+  "theme": {
+    "looks": {
+      "dark": {"bg": "#050805", "surface": "#0A100A", "surfaceRaised": "#0E160E", "fill": "#0F1F0F", "fillStrong": "#163016", "separator": "#2FA84F", "text": "#33FF66", "textSecondary": "#2BD457", "textTertiary": "#22A846", "surface2": "#0F1A0F", "surface3": "#163016", "surface4": "#1F4A1F", "borderStrong": "#33FF66", "sunken": "#000000", "routeIdle": "#1F7A35", "problem": "#FFB000", "critical": "#FF5555", "realtime": "#A6FFCB", "accent": "#33FF66"},
+      "oled": {"bg": "#000000", "surface": "#0B0700", "surfaceRaised": "#120B00", "fill": "#1C1200", "fillStrong": "#2E1E00", "separator": "#B37A00", "text": "#FFB000", "textSecondary": "#E09A00", "textTertiary": "#B37A00", "surface2": "#120C00", "surface3": "#2E1E00", "surface4": "#4A3100", "borderStrong": "#FFB000", "sunken": "#000000", "routeIdle": "#7A5300", "problem": "#FFE066", "critical": "#FF6B5B", "realtime": "#9BFF6B", "accent": "#FFB000"},
+      "light": {"bg": "#F2F2EA", "surface": "#FAFAF5", "surfaceRaised": "#FFFFFF", "fill": "#E4E8DE", "fillStrong": "#D3DACB", "separator": "#1F5F2F", "text": "#0E2A14", "textSecondary": "#24452C", "textTertiary": "#3E5E45", "surface2": "#E8ECE2", "surface3": "#D9E0D2", "surface4": "#C1CCB8", "borderStrong": "#0F3D1C", "sunken": "#EAEDE3", "routeIdle": "#7E9484", "problem": "#8A5A00", "critical": "#A8202A", "realtime": "#0A7A3A", "accent": "#5EE07F"}
+    },
+    "lineBadges": "strip",
+    "corners": {"card": 0, "sheet": 0, "tile": 0, "badge": 0, "control": 0},
+    "font": "fonts/LiberationMono-Regular.ttf",
+    "outline": "double",
+    "map": {
+      "dark": {"ground": "#050805", "ink": "#33FF66"},
+      "oled": {"ground": "#000000", "ink": "#FFB000"},
+      "light": {"ground": "#F2F2EA", "ink": "#0E2A14"}
+    }
+  }
+}

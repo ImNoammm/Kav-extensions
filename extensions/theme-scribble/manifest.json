@@ -1,0 +1,25 @@
+{
+  "format": 1, "kind": "theme", "minKav": 48, "api": 5,
+  "name": "scribble", "displayName": "Scribble", "version": "1.0.0", "release": 1,
+  "issues": "https://github.com/ImNoammm/kav-extensions/issues",
+  "displayNameHe": "שרבוט",
+  "description": "Kav drawn by hand: pencil outlines that never quite close, handwriting, cream paper and a yellow highlighter. Dark is a chalkboard.",
+  "descriptionHe": "כל Kav מצויר ביד: קווי עיפרון שאף פעם לא נסגרים עד הסוף, כתב יד, נייר בצבע שמנת ומרקר צהוב. המראה הכהה הוא לוח גיר.",
+  "contributions": [],
+  "theme": {
+    "looks": {
+      "light": {"bg": "#F6F1E3", "surface": "#FFFDF6", "surfaceRaised": "#FFFDF6", "fill": "#EFE8D4", "fillStrong": "#E3DAC0", "separator": "#4A4A55", "text": "#22222B", "textSecondary": "#45454F", "textTertiary": "#66666E", "surface2": "#EAE3CF", "surface3": "#DDD4BA", "surface4": "#C9BE9F", "borderStrong": "#2B2B36", "sunken": "#EFE9D8", "routeIdle": "#9A9488", "problem": "#8F5F00", "critical": "#B23A3A", "realtime": "#1F7A4A", "accent": "#FFE45C"},
+      "dark": {"bg": "#22302A", "surface": "#2A3A33", "surfaceRaised": "#30423A", "fill": "#34473E", "fillStrong": "#3F554A", "separator": "#C8D0C8", "text": "#F2F2EA", "textSecondary": "#CBD2C8", "textTertiary": "#A3AEA4", "surface2": "#34463D", "surface3": "#3E5348", "surface4": "#4F6659", "borderStrong": "#EEF0EA", "sunken": "#1D2924", "routeIdle": "#8A978E", "problem": "#F2D27A", "critical": "#F4A0A0", "realtime": "#8FE3A8", "accent": "#FFE680"},
+      "oled": {"bg": "#101613", "surface": "#1A241F", "surfaceRaised": "#202C26", "fill": "#26342D", "fillStrong": "#30423A", "separator": "#C8D0C8", "text": "#F2F2EA", "textSecondary": "#CBD2C8", "textTertiary": "#A3AEA4", "surface2": "#24302A", "surface3": "#2E3C35", "surface4": "#3F5047", "borderStrong": "#EEF0EA", "sunken": "#0A0F0C", "routeIdle": "#8A978E", "problem": "#F2D27A", "critical": "#F4A0A0", "realtime": "#8FE3A8", "accent": "#FFE680"}
+    },
+    "lineBadges": "kav",
+    "corners": {"card": 14, "sheet": 22, "tile": 10, "badge": 6, "control": 12},
+    "font": "fonts/PlaypenSansHebrew.ttf",
+    "outline": "sketch",
+    "map": {
+      "light": {"ground": "#F6F1E3", "ink": "#3A3A44", "water": "#CFE3EE"},
+      "dark": {"ground": "#22302A", "ink": "#E8EDE4", "water": "#2B4A52"},
+      "oled": {"ground": "#101613", "ink": "#CBD2C8", "water": "#16282B"}
+    }
+  }
+}
